@@ -63,31 +63,16 @@ public class CardsInHandHandler : MonoBehaviour
             return;
         }
 
-        // Karte an Startposition erstellen 
-        GameObject newCard = Instantiate(DrawRandomCard(cardManager), startPosition.position, Quaternion.identity);
-        //GameObject newCard = Instantiate(cardManager.cardDeck[randomIndex].gameObject, startPosition.position, Quaternion.identity);
+        // neue Karte erstellen 
+        GameObject newCard = DrawRandomCard(cardManager);
 
-        // Karte skalieren (auf 30% der Originalgröße)
+        // Wenn DrawRandomCard fehlschlägt:
+        if (newCard == null) return;
+
+        // Startposition und Parent setzen
+        newCard.transform.position = startPosition.position;
         newCard.transform.localScale = new Vector3(.3f, .3f, .3f);
-
-        // Parent der Karte setzen, aber worldPosition beibehalten (damit Startposition korrekt bleibt)
         newCard.transform.SetParent(handPosition, true);
-
-        // Status der Karte setzen (ob sie im Deck ist oder nicht)
-        //CardBasicBahavior cardBehavior = newCard.GetComponent<CardBasicBahavior>();
-        //if (cardBehavior != null)
-        //{
-        //    // Karte ist jetzt in der Hand
-        //    cardBehavior.InactivateStatus();
-        //    cardBehavior.isInHand = true;
-        //}
-        //else { Debug.LogWarning("CardBasicBahavior-Komponente nicht gefunden auf der neuen Karte!"); }
-
-        // relativeChance der Karte updaten
-        //CardPropertiesTest cardProperties = newCard.GetComponent<CardPropertiesTest>();
-        //if (cardProperties == null) { Debug.Log("cardProperties == null"); }
-        //cardProperties.UpdaterelativeChance();
-        //cardProperties.DeactivateChanceText();
 
         // Karte zur Liste hinzufügen
         cardsInHand.Add(newCard);
