@@ -44,6 +44,8 @@ public class CardBasicBahavior : MonoBehaviour
             Debug.Log("Clicked on Card");
 
             StartCoroutine(MoveCardUpAndDown());
+
+            Debug.Log("Set Details in Window");
         }
 
         if (!isInHand)
